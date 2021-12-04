@@ -46,7 +46,7 @@ class ExtendedKalmanFilterSLAM():
         odom_data = np.insert(self.odometry_data, 1, -1, axis=1)
         self.data = np.concatenate((odom_data, self.measurement_data), axis=0)
         self.data = self.data[np.argsort(self.data[:, 0])]
-
+        
         # Select data according to start_frame and end_frame
         # Fisrt frame must be control input
         while self.data[start_frame][1] != -1:
