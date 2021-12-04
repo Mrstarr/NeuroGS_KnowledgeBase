@@ -28,7 +28,7 @@ class SimpleGraph:
         self.data = self.data[np.argsort(self.data[:, 0])]
 
         # Select data according to start_frame and end_frame
-        # Fisrt frame must be control input
+        # First frame must be control input
         while self.data[start_frame][1] != -1:
             start_frame += 1
         # Remove all data before start_frame and after the end_timestamp
@@ -57,11 +57,16 @@ class SimpleGraph:
         # Barcode 6 is the first landmark (1 - 15 for 6 - 20)
         self.landmark_indexes = {}
         for i in range(5, len(self.barcodes_data), 1):
-            self.landmark_indexes[self.barcodes_data[i][1]] = i - 4
+            self.landmark_indexes[self.barcodes_data[i][1]] = i - 5
+
+        for key, value in self.landmark_indexes.items(): 
+            print("key: " + str(key))
+            print("item: " + str(value))
 
         # Table to record if each landmark has been seen or not
         # Element [0] is not used. [1] - [15] represent for landmark# 6 - 20
         self.landmark_observed = np.full(len(self.landmark_indexes) + 1, False)
+        print("observed: " + str(self.landmark_observed))
 
 
     def plot_data(self):
@@ -84,7 +89,7 @@ class SimpleGraph:
         for location in self.landmark_locations:
             landmark_xs.append(self.landmark_locations[location][0])
             landmark_ys.append(self.landmark_locations[location][1])
-            index = self.landmark_indexes[location] + 5
+            index = self.landmark_indexes[location] + 6
             plt.text(landmark_xs[-1], landmark_ys[-1], str(index), alpha=0.5, fontsize=10)
         plt.scatter(landmark_xs, landmark_ys, s=200, c='k', alpha=0.2, marker='*', label='Landmark Ground Truth')
 
